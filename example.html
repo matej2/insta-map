@@ -1,0 +1,55 @@
+<html>
+<head>
+  <title>Openlayers Marker Array Multilayer Example</title>
+  <style>
+    #mapid { height: 560px; }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+</head>
+
+<body>
+  <div id="mapid"></div>
+
+
+
+    
+<script>
+  var mymap = L.map('mapid').setView([46.22211, 14.60713], 10);
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'your.mapbox.access.token'
+}).addTo(mymap);
+
+var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(mymap);
+}
+var myIcon = L.icon({
+  iconUrl: 'https://instagram.flju2-1.fna.fbcdn.net/v/t51.2885-15/e35/119980943_1480257545508204_8520352034838360916_n.jpg?_nc_ht=instagram.flju2-1.fna.fbcdn.net&_nc_cat=100&_nc_ohc=IefFkB1AHvcAX8dTwzV&_nc_tp=18&oh=1dd71af385a2c6038af2fbefc2a4f672&oe=5F921408',
+  iconSize: [70, 70],
+  iconAnchor: [22, 94],
+  popupAnchor: [-3, -76],
+});
+
+var marker = L.marker([46.22211, 14.60713], {
+  icon: myIcon
+}).addTo(mymap);
+marker.bindPopup("<b>Kranj, Slovenia</b><br>Hello, this is easy.").openPopup();
+
+
+</script>
+</body>
+</html>
