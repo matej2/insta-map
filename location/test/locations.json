@@ -1,0 +1,49 @@
+{
+  "country_directory_page": true,
+  "country_info": {
+    "id": "SI",
+    "name": "Slovenia",
+    "slug": "slovenia"
+  },
+  "city_list": [{
+    "id": "c2163094",
+    "name": "Ljubljana",
+    "slug": "ljubljana-slovenia"
+  }, {
+    "id": "c2163322",
+    "name": "Maribor",
+    "slug": "maribor-slovenia"
+  }, {
+    "id": "c2163178",
+    "name": "Lubliano",
+    "slug": "lubliano-slovenia"
+  }, {
+    "id": "c2163464",
+    "name": "Moste",
+    "slug": "moste-slovenia"
+  }, {
+    "id": "c2164849",
+    "name": "Spodnja Siska",
+    "slug": "spodnja-siska-slovenia"
+  }, {
+    "id": "c2162850",
+    "name": "Kozarje",
+    "slug": "kozarje-slovenia"
+  }, {
+    "id": "c2164384",
+    "name": "Rozna Dolina",
+    "slug": "rozna-dolina-slovenia"
+  }, {
+    "id": "c2165016",
+    "name": "Stozice",
+    "slug": "stozice-slovenia"
+  }, {
+    "id": "c2161630",
+    "name": "Cragni",
+    "slug": "cragni-slovenia"
+  }, {
+    "id": "c2161550",
+    "name": "Celje",
+    "slug": "celje-slovenia"
+  }
+}
