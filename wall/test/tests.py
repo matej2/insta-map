@@ -43,7 +43,7 @@ def read_posts():
                 d = TestData(p['node']['thumbnail_src'], "")
             response.append(d)
 
-    return MapData(l, response)
+    return MapData(l, response  )
 
 
 def create_test_json():
