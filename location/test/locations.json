@@ -1,49 +1,497 @@
 {
-  "country_directory_page": true,
-  "country_info": {
-    "id": "SI",
-    "name": "Slovenia",
-    "slug": "slovenia"
-  },
-  "city_list": [{
-    "id": "c2163094",
-    "name": "Ljubljana",
-    "slug": "ljubljana-slovenia"
-  }, {
-    "id": "c2163322",
-    "name": "Maribor",
-    "slug": "maribor-slovenia"
-  }, {
-    "id": "c2163178",
-    "name": "Lubliano",
-    "slug": "lubliano-slovenia"
-  }, {
-    "id": "c2163464",
-    "name": "Moste",
-    "slug": "moste-slovenia"
-  }, {
-    "id": "c2164849",
-    "name": "Spodnja Siska",
-    "slug": "spodnja-siska-slovenia"
-  }, {
-    "id": "c2162850",
-    "name": "Kozarje",
-    "slug": "kozarje-slovenia"
-  }, {
-    "id": "c2164384",
-    "name": "Rozna Dolina",
-    "slug": "rozna-dolina-slovenia"
-  }, {
-    "id": "c2165016",
-    "name": "Stozice",
-    "slug": "stozice-slovenia"
-  }, {
-    "id": "c2161630",
-    "name": "Cragni",
-    "slug": "cragni-slovenia"
-  }, {
-    "id": "c2161550",
-    "name": "Celje",
-    "slug": "celje-slovenia"
-  }
+   "city_directory_page":true,
+   "country_info":{
+      "id":"SI",
+      "name":"Slovenia",
+      "slug":"slovenia"
+   },
+   "city_info":{
+      "id":"c2163094",
+      "name":"Ljubljana",
+      "slug":"ljubljana-slovenia"
+   },
+   "location_list":[
+      {
+         "id":"213606897",
+         "name":"Ljubljana, Slovenia",
+         "slug":"ljubljana-slovenia"
+      },
+      {
+         "id":"234850045",
+         "name":"Tivoli City Park",
+         "slug":"tivoli-city-park"
+      },
+      {
+         "id":"314668210",
+         "name":"Center Ljubljana",
+         "slug":"center-ljubljana"
+      },
+      {
+         "id":"213102647",
+         "name":"Center District, Ljubljana",
+         "slug":"center-district-ljubljana"
+      },
+      {
+         "id":"242236757",
+         "name":"Ljubljanica River, Ljubljana",
+         "slug":"ljubljanica-river-ljubljana"
+      },
+      {
+         "id":"1047954555289651",
+         "name":"Ljubliana, Slovenija",
+         "slug":"ljubliana-slovenija"
+      },
+      {
+         "id":"230133136",
+         "name":"Triple Bridge",
+         "slug":"triple-bridge"
+      },
+      {
+         "id":"213125846",
+         "name":"Congress Square",
+         "slug":"congress-square"
+      },
+      {
+         "id":"123020235045944",
+         "name":"Lubiana, Slovenia",
+         "slug":"lubiana-slovenia"
+      },
+      {
+         "id":"234817467",
+         "name":"Pre\u0161eren Square",
+         "slug":"preseren-square"
+      },
+      {
+         "id":"607613341",
+         "name":"WC / Toilette",
+         "slug":"wc-toilette"
+      },
+      {
+         "id":"213783784",
+         "name":"Neboti\u010dnik Skyscraper",
+         "slug":"neboticnik-skyscraper"
+      },
+      {
+         "id":"5140898",
+         "name":"Narodna galerija",
+         "slug":"narodna-galerija"
+      },
+      {
+         "id":"241528922",
+         "name":"Cankar Centre",
+         "slug":"cankar-centre"
+      },
+      {
+         "id":"230230878",
+         "name":"Gospodarsko razstavi\u0161\u010de - GR",
+         "slug":"gospodarsko-razstavisce-gr"
+      },
+      {
+         "id":"217264051",
+         "name":"Cirkus",
+         "slug":"cirkus"
+      },
+      {
+         "id":"399761836",
+         "name":"Ljubljana, Slovenja",
+         "slug":"ljubljana-slovenja"
+      },
+      {
+         "id":"219836567",
+         "name":"Tivoli, Ljubljana",
+         "slug":"tivoli-ljubljana"
+      },
+      {
+         "id":"833256005",
+         "name":"Slovenska Hi\u0161a",
+         "slug":"slovenska-hisa"
+      },
+      {
+         "id":"648407941",
+         "name":"Grand Hotel Union",
+         "slug":"grand-hotel-union"
+      },
+      {
+         "id":"350149841848973",
+         "name":"Tivoli, Ljubljana",
+         "slug":"tivoli-ljubljana"
+      },
+      {
+         "id":"253022389",
+         "name":"Opatija, Croatia",
+         "slug":"opatija-croatia"
+      },
+      {
+         "id":"419400868442937",
+         "name":"InterContinental - Ljubljana",
+         "slug":"intercontinental-ljubljana"
+      },
+      {
+         "id":"1758723567739134",
+         "name":"Hi\u0161a Iluzij",
+         "slug":"hisa-iluzij"
+      },
+      {
+         "id":"8173948",
+         "name":"As Aperitivo",
+         "slug":"as-aperitivo"
+      },
+      {
+         "id":"2934248",
+         "name":"Klub K4",
+         "slug":"klub-k4"
+      },
+      {
+         "id":"423941927",
+         "name":"Soba 102 Ljubljana",
+         "slug":"soba-102-ljubljana"
+      },
+      {
+         "id":"2356567",
+         "name":"Best Western Premier Hotel Slon",
+         "slug":"best-western-premier-hotel-slon"
+      },
+      {
+         "id":"520733",
+         "name":"Pre\u0161ernov trg",
+         "slug":"presernov-trg"
+      },
+      {
+         "id":"1734218",
+         "name":"Kavarna Cacao",
+         "slug":"kavarna-cacao"
+      },
+      {
+         "id":"504867098",
+         "name":"Ljubliana",
+         "slug":"ljubliana"
+      },
+      {
+         "id":"928897685",
+         "name":"Pops Place",
+         "slug":"pops-place"
+      },
+      {
+         "id":"214022130",
+         "name":"TOP SIX - Day n Night Club",
+         "slug":"top-six-day-n-night-club"
+      },
+      {
+         "id":"235716192",
+         "name":"Grand Hotel Union",
+         "slug":"grand-hotel-union"
+      },
+      {
+         "id":"323599139",
+         "name":"Le Petit cafe",
+         "slug":"le-petit-cafe"
+      },
+      {
+         "id":"309486109",
+         "name":"Ljubljana Capital Of Slovenia",
+         "slug":"ljubljana-capital-of-slovenia"
+      },
+      {
+         "id":"4174670",
+         "name":"Moderna galerija",
+         "slug":"moderna-galerija"
+      },
+      {
+         "id":"237199269",
+         "name":"Lake Bled",
+         "slug":"lake-bled"
+      },
+      {
+         "id":"243760730",
+         "name":"Ljubljana Center Tromostovje",
+         "slug":"ljubljana-center-tromostovje"
+      },
+      {
+         "id":"2501453",
+         "name":"Lolita - Kaval Group",
+         "slug":"lolita-kaval-group"
+      },
+      {
+         "id":"2017773",
+         "name":"Kri\u017eanke",
+         "slug":"krizanke"
+      },
+      {
+         "id":"396106434102647",
+         "name":"Museum of Illusions, Ljubljana",
+         "slug":"museum-of-illusions-ljubljana"
+      },
+      {
+         "id":"281344734",
+         "name":"Ljubljana railway station",
+         "slug":"ljubljana-railway-station"
+      },
+      {
+         "id":"294372032",
+         "name":"Ljubljana Opera House",
+         "slug":"ljubljana-opera-house"
+      },
+      {
+         "id":"5144198",
+         "name":"Makalonca",
+         "slug":"makalonca"
+      },
+      {
+         "id":"278460747",
+         "name":"Restavracija JB",
+         "slug":"restavracija-jb"
+      },
+      {
+         "id":"1028124365",
+         "name":"Eslov\u00eania",
+         "slug":"eslovenia"
+      },
+      {
+         "id":"3640750",
+         "name":"Kongresni trg",
+         "slug":"kongresni-trg"
+      },
+      {
+         "id":"451937498",
+         "name":"Kurzschluss",
+         "slug":"kurzschluss"
+      },
+      {
+         "id":"281543996",
+         "name":"Slovenska filharmonija - Academia philharmonicorum",
+         "slug":"slovenska-filharmonija-academia-philharmonicorum"
+      },
+      {
+         "id":"237413020",
+         "name":"Cutty Sark Pub",
+         "slug":"cutty-sark-pub"
+      },
+      {
+         "id":"235653249",
+         "name":"Fakulteta za arhitekturo Univerza v Ljubljani",
+         "slug":"fakulteta-za-arhitekturo-univerza-v-ljubljani"
+      },
+      {
+         "id":"1933019036944314",
+         "name":"Postojna Caves & Predjama Castle, Slovenia",
+         "slug":"postojna-caves-predjama-castle-slovenia"
+      },
+      {
+         "id":"743579352",
+         "name":"Metelkova, Ljubliana, Sloveni\u00eb",
+         "slug":"metelkova-ljubliana-slovenie"
+      },
+      {
+         "id":"897139",
+         "name":"Hotel Lev, Ljubljana",
+         "slug":"hotel-lev-ljubljana"
+      },
+      {
+         "id":"1867017859992846",
+         "name":"Tromostovje",
+         "slug":"tromostovje"
+      },
+      {
+         "id":"275124796365576",
+         "name":"Kongresni Trg",
+         "slug":"kongresni-trg"
+      },
+      {
+         "id":"247427692",
+         "name":"SNG DRAMA Ljubljana",
+         "slug":"sng-drama-ljubljana"
+      },
+      {
+         "id":"267093572",
+         "name":"Ljubljanica",
+         "slug":"ljubljanica"
+      },
+      {
+         "id":"250826857",
+         "name":"Vander Urbani Resort",
+         "slug":"vander-urbani-resort"
+      },
+      {
+         "id":"150249262281295",
+         "name":"\u010cIN\u010cIN",
+         "slug":"cincin"
+      },
+      {
+         "id":"252387637",
+         "name":"Julian Alps",
+         "slug":"julian-alps"
+      },
+      {
+         "id":"662251656",
+         "name":"Oster Rob - kuhinjski no\u017ei",
+         "slug":"oster-rob-kuhinjski-nozi"
+      },
+      {
+         "id":"284695436",
+         "name":"Ljubljana center",
+         "slug":"ljubljana-center"
+      },
+      {
+         "id":"234952942",
+         "name":"Ljubljana, Republic Of Slovenija",
+         "slug":"ljubljana-republic-of-slovenija"
+      },
+      {
+         "id":"1021643058",
+         "name":"Slon 1552",
+         "slug":"slon-1552"
+      },
+      {
+         "id":"381426208",
+         "name":"Cankarjev Dom",
+         "slug":"cankarjev-dom"
+      },
+      {
+         "id":"270814279",
+         "name":"Cobblers Bridge",
+         "slug":"cobblers-bridge"
+      },
+      {
+         "id":"1091661721036251",
+         "name":"Cankarjev Dom / Cultural And Congress Centre",
+         "slug":"cankarjev-dom-cultural-and-congress-centre"
+      },
+      {
+         "id":"568905777",
+         "name":"Siva Lobanja Tattoo",
+         "slug":"siva-lobanja-tattoo"
+      },
+      {
+         "id":"262217135",
+         "name":"Muzej in galerije mesta Ljubljane",
+         "slug":"muzej-in-galerije-mesta-ljubljane"
+      },
+      {
+         "id":"310106056",
+         "name":"Predjama Castle",
+         "slug":"predjama-castle"
+      },
+      {
+         "id":"234332309",
+         "name":"Narodna in univerzitetna knji\u017enica",
+         "slug":"narodna-in-univerzitetna-knjiznica"
+      },
+      {
+         "id":"627014869",
+         "name":"Dvorni Bar",
+         "slug":"dvorni-bar"
+      },
+      {
+         "id":"249335906",
+         "name":"Kinodvor. Mestni Kino.",
+         "slug":"kinodvor-mestni-kino"
+      },
+      {
+         "id":"971214864",
+         "name":"MGLC Ljubljana",
+         "slug":"mglc-ljubljana"
+      },
+      {
+         "id":"1020398469",
+         "name":"Puffy Lil pancakes",
+         "slug":"puffy-lil-pancakes"
+      },
+      {
+         "id":"394744090",
+         "name":"Ljubljana Tromostovje",
+         "slug":"ljubljana-tromostovje"
+      },
+      {
+         "id":"133695883768176",
+         "name":"Slovenia, Europe",
+         "slug":"slovenia-europe"
+      },
+      {
+         "id":"405979188",
+         "name":"Ziferblat Ljubljana",
+         "slug":"ziferblat-ljubljana"
+      },
+      {
+         "id":"319822362",
+         "name":"\u010cokoladni Atelje Dobnik",
+         "slug":"cokoladni-atelje-dobnik"
+      },
+      {
+         "id":"288104645",
+         "name":"Hala Tivoli",
+         "slug":"hala-tivoli"
+      },
+      {
+         "id":"237857493",
+         "name":"Ljubljana Old Town",
+         "slug":"ljubljana-old-town"
+      },
+      {
+         "id":"535146450",
+         "name":"Narodni muzej Slovenije / National Museum of Slovenia",
+         "slug":"narodni-muzej-slovenije-national-museum-of-slovenia"
+      },
+      {
+         "id":"181611929397811",
+         "name":"Gatka",
+         "slug":"gatka"
+      },
+      {
+         "id":"6255775",
+         "name":"SNG Opera in balet Ljubljana",
+         "slug":"sng-opera-in-balet-ljubljana"
+      },
+      {
+         "id":"672704",
+         "name":"Zlata Ribica",
+         "slug":"zlata-ribica"
+      },
+      {
+         "id":"257759209",
+         "name":"Ljubljana Center",
+         "slug":"ljubljana-center"
+      },
+      {
+         "id":"192642001381365",
+         "name":"Kri\u017eanke",
+         "slug":"krizanke"
+      },
+      {
+         "id":"1017221125",
+         "name":"moderna.",
+         "slug":"moderna"
+      },
+      {
+         "id":"1022091755",
+         "name":"Cantina Mexicana",
+         "slug":"cantina-mexicana"
+      },
+      {
+         "id":"242874125",
+         "name":"City Hotel Ljubljana",
+         "slug":"city-hotel-ljubljana"
+      },
+      {
+         "id":"318340832309141",
+         "name":"Emporia In",
+         "slug":"emporia-in"
+      },
+      {
+         "id":"848446",
+         "name":"Filozofska fakulteta UL",
+         "slug":"filozofska-fakulteta-ul"
+      },
+      {
+         "id":"41120",
+         "name":"Tivoli Park (Ljubljana)",
+         "slug":"tivoli-park-ljubljana"
+      },
+      {
+         "id":"406794445",
+         "name":"Gelateria Romantika",
+         "slug":"gelateria-romantika"
+      }
+   ],
+   "next_page":2,
+   "logging_page_id":"locationPage_c2163094"
 }
