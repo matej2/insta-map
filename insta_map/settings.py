@@ -125,3 +125,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/var/www/static/',
 ]
+
+# JSON file dir
+CITIES = os.path.join(BASE_DIR, "static", "cities.json")
+LOCATIONS = os.path.join(BASE_DIR, "static", "locations.json")
+PHOTOS = os.path.join(BASE_DIR, "static", "photos.json")

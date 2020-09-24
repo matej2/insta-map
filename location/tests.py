@@ -4,3 +4,6 @@ from __future__ import unicode_literals
 from django.test import TestCase
 
 # Create your tests here.
+from location.scraper import scrape_locations
+
+scrape_locations()

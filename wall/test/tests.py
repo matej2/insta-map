@@ -1,16 +1,10 @@
 import json
 import os
 import pathlib
-from json import JSONEncoder
+
+from insta_map.common import MyEncoder
 from insta_map.settings import BASE_DIR
 
-
-class Location:
-    def __init__(self, id, lat, lng, name):
-        self.id = id
-        self.lat = lat
-        self.lng = lng
-        self.name = name
 
 class City:
     def __init__(self, id, data):
@@ -22,10 +16,6 @@ class TestData:
         self.thumbnail = thumbnail
         self.caption = caption
 
-
-class MyEncoder(JSONEncoder):
-    def default(self, o):
-        return o.__dict__
 
 class MapData:
     def __init__(self, meta, list):

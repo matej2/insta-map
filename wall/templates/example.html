@@ -40,34 +40,39 @@ function httpGetAsync(theUrl, callback)
     xmlHttp.send(null);
 }
 
-httpGetAsync("static/wall-izola_test.json", function(d) {
+httpGetAsync("static/photos.json", function(d) {
   res = JSON.parse(d)
 
+  let name;
   let lat;
   let lng;
 
   res.forEach(function(c) {
 
+    let min = 0.005;
+    let max = -0.005;
+
+    //lat = c["meta"]["lat"]+(Math.random()*(max - min) + min)
+    //lng = c["meta"]["lng"]+(Math.random()*(max - min) + min)
+    name = c["meta"]["location"]
+    lat = c["meta"]["lat"];
+    lng = c["meta"]["lng"];
+
     c["list"].forEach(function(a) {
-    let myIcon = L.icon({
-      iconUrl: a["thumbnail"],
-      iconSize: [70, 70],
-      iconAnchor: [10, 40],
-      popupAnchor: [-3, -76],
-    });
+      let myIcon = L.icon({
+        iconUrl: a["thumbnail"],
+        iconSize: [70, 70],
+        iconAnchor: [10, 40],
+        popupAnchor: [-3, -76],
+      });
 
-    let min = 0.005
-    let max = -0.005
-    lat = c["meta"]["lat"]+(Math.random()*(max - min) + min)
-    lng = c["meta"]["lng"]+(Math.random()*(max - min) + min)
-    console.log(lat, lng)
-    let m = L.marker([lat, lng], {
-      icon: myIcon
-    });
-    m.bindPopup(a["caption"]).openPopup();
+      let m = L.marker([lat, lng], {
+        icon: myIcon
+      });
+      m.bindPopup(a["caption"] + "<br /><br />" + name).openPopup();
 
-    markers.addLayer(m)
-  })
+      markers.addLayer(m);
+    })
   });
 
 
