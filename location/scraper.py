@@ -1,6 +1,7 @@
 import json
 import random
 import time
+from json import JSONDecodeError
 
 import requests
 
@@ -19,21 +20,30 @@ def scrape_locations():
     with open(CITIES, "r") as file:
         data = json.loads(file.read())
         for d in data:
-            loc = requests.get(f'https://www.instagram.com/explore/locations/{d["id"]}/?__a=1').json()
 
-            for r in loc["location_list"]:
-                res.append(Location(r["id"], r["name"]))
-                st = st + 1
+            try:
+                loc = requests.get(f'https://www.instagram.com/explore/locations/{d["id"]}/?__a=1').json()
 
-                if st > 10:
+
+                for r in loc["location_list"]:
+                    res.append(Location(r["id"], r["name"]))
+                    st = st + 1
+
+                    # How many locations for each city?
+                    if st > 2:
+                        break
+
+                # How many cities to read?
+                st2 = st2 + 1
+                if st2 > 50:
                     break
+            except KeyError:
+                continue
+            except JSONDecodeError:
+                print(f'Error decoding json. Skipping {d["id"]}')
 
-            st2 = st2 + 1
-            if st2 > 10:
-                break
-
-        time.sleep((random.random() * 500) / 1000)
-
+            time.sleep((random.random() * 500) / 1000)
+            print(f'Added {len(res)} locations for {d["name"]}')
 
     with open(LOCATIONS, "w") as file:
         file.write(json.dumps(res, cls=MyEncoder))

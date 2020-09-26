@@ -9,12 +9,11 @@
   crossorigin=""/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
-
-
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -24,10 +23,14 @@
 
 
 <script>
-  var mymap = L.map('mapid', {
-  maxZoom: 20
+var mymap = L.map('mapid', {
+    maxZoom: 20,
+    zoom: 13
   }).setView([46.03211, 14.60813], 9);
-  var markers = L.markerClusterGroup();
+
+var markers = L.markerClusterGroup({
+  spiderfyDistanceMultiplier: 2.7
+});
 
 function httpGetAsync(theUrl, callback)
 {
@@ -69,7 +72,7 @@ httpGetAsync("static/photos.json", function(d) {
       let m = L.marker([lat, lng], {
         icon: myIcon
       });
-      m.bindPopup(a["caption"] + "<br /><br />" + name).openPopup();
+      m.bindPopup("<img style=\"height:200px;\" src=\"" + a['thumbnail'] + "\"><p></p>" + a["caption"] + "<p></p>" + name).openPopup();
 
       markers.addLayer(m);
     })
@@ -78,13 +81,14 @@ httpGetAsync("static/photos.json", function(d) {
 
 })
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    minZoom: 4,
+    maxZoom: 25,
+    maxNativeZoom: 25,
     id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'your.mapbox.access.token'
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
 }).addTo(mymap);
 
 var popup = L.popup();
