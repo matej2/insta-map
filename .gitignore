@@ -1,0 +1,6 @@
+.idea/
+
+# Project-specific
+static/locations.json
+static/photos.json
+insta_map/proxies.json
