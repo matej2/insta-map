@@ -5,7 +5,7 @@ from json import JSONDecodeError
 
 import requests
 
-from insta_map.common import MyEncoder
+from insta_map.common import MyEncoder, get_proxy
 from insta_map.settings import CITIES, LOCATIONS
 from location.models import Location
 
@@ -17,12 +17,16 @@ def scrape_locations():
     st = 0
     st2 = 0
 
+    proxies = {
+        'http': get_proxy()
+    }
+
     with open(CITIES, "r") as file:
         data = json.loads(file.read())
         for d in data:
 
             try:
-                loc = requests.get(f'https://www.instagram.com/explore/locations/{d["id"]}/?__a=1').json()
+                loc = requests.get(f'https://www.instagram.com/explore/locations/{d["id"]}/?__a=1', proxies=proxies).json()
 
 
                 for r in loc["location_list"]:

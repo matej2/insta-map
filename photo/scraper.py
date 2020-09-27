@@ -5,7 +5,7 @@ import time
 
 import requests
 
-from insta_map.common import MyEncoder
+from insta_map.common import MyEncoder, get_proxy
 from insta_map.settings import PHOTOS, LOCATIONS, CITIES
 from photo.models import PhotoData, PhotoMeta, Photo
 
@@ -17,6 +17,12 @@ def scrape_photos():
     st = 0
     st2 = 0
 
+
+    proxies = {
+        'http': get_proxy()
+    }
+
+
     # Caption remove
     p = re.compile('\@\w+|\#\w+')
     # Caption block
@@ -26,7 +32,7 @@ def scrape_photos():
         data = json.loads(file.read())
 
     for d in data:
-        pics = requests.get(f'https://www.instagram.com/explore/locations/{d["id"]}/?__a=1').json()["graphql"][
+        pics = requests.get(f'https://www.instagram.com/explore/locations/{d["id"]}/?__a=1', proxies=proxies).json()["graphql"][
             "location"]
 
         location = d["name"]
