@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'location.apps.LocationConfig',
-    'wall.apps.WallConfig'
+    'wall.apps.WallConfig',
+    'page.apps.PageConfig'
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,4 @@ STATICFILES_DIRS = [
 CITIES = os.path.join(BASE_DIR, "static", "cities.json")
 LOCATIONS = os.path.join(BASE_DIR, "static", "locations.json")
 PHOTOS = os.path.join(BASE_DIR, "static", "photos.json")
+USER = os.path.join(BASE_DIR, "static", "page.json")
