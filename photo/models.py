@@ -1,19 +1,10 @@
 from django.db import models
 
 # Create your models here.
+from location.models import Location
 
-class PhotoMeta:
-    def __init__(self, location, lat, lng):
-        self.location = location
-        self.lat = lat
-        self.lng = lng
 
-class PhotoData:
-    def __init__(self, meta, list):
-        self.meta = meta
-        self.list = list
-
-class Photo:
-    def __init__(self, thumbnail, caption):
-        self.thumbnail = thumbnail
-        self.caption = caption
+class Photo(models.Model):
+    thumbnail = models.CharField(max_length=255, null=True)
+    caption = models.CharField(max_length=255, null=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)

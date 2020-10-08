@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'location.apps.LocationConfig',
     'wall.apps.WallConfig',
     'page.apps.PageConfig',
-    'city.apps.CityConfig'
+    'city.apps.CityConfig',
+    'photo.apps.PhotoConfig'
 ]
 
 MIDDLEWARE = [

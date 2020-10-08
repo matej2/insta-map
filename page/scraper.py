@@ -7,8 +7,6 @@ import requests
 
 from insta_map.common import MyEncoder, get_proxy
 from insta_map.settings import PHOTOS
-from photo.models import PhotoData, Photo, PhotoMeta
-from page.models import UserMeta
 
 random.seed()
 

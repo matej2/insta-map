@@ -7,5 +7,5 @@ def scrape_cities():
     cities = res["city_list"]
 
     for city in cities:
-        c = City(name=city["name"])
+        c = City(id=city["id"], name=city["name"])
         c.save()
