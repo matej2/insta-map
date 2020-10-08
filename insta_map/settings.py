@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'location.apps.LocationConfig',
     'wall.apps.WallConfig',
-    'page.apps.PageConfig'
+    'page.apps.PageConfig',
+    'city.apps.CityConfig'
 ]
 
 MIDDLEWARE = [

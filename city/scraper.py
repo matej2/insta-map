@@ -1,14 +1,11 @@
-import json
-
-import requests as r
-
-from insta_map.common import MyEncoder
-from insta_map.settings import CITIES
+from city.models import City
+from insta_map.proxy import get_using_proxy
 
 
 def scrape_cities():
-    res = r.get("https://www.instagram.com/explore/locations/SI/slovenia/?__a=1").json()
+    res = get_using_proxy("https://www.instagram.com/explore/locations/SI/slovenia/?__a=1").json()
     cities = res["city_list"]
 
-    with open(CITIES, "w") as file:
-        file.write(json.dumps(cities, cls=MyEncoder))
+    for city in cities:
+        c = City(name=city["name"])
+        c.save()

@@ -4,8 +4,9 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
+from city.models import City
 
-class Location:
-    def __init__(self, id, name):
-        self.id = id
-        self.name = name
+
+class Location(models.Model):
+    name = models.CharField(max_length=255, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
