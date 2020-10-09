@@ -8,7 +8,7 @@ import requests
 from insta_map.common import MyEncoder, get_proxy
 from insta_map.settings import PHOTOS, LOCATIONS, CITIES
 from location.models import Location
-from photo.models import PhotoData, PhotoMeta, Photo
+from photo.models import Photo
 
 random.seed()
 
@@ -32,19 +32,18 @@ def scrape_photos():
     data = Location.objects.all()
 
     for d in data:
-        pics = requests.get(f'https://www.instagram.com/explore/locations/{d["id"]}/?__a=1', proxies=proxies).json()["graphql"][
+        pics = requests.get(f'https://www.instagram.com/explore/locations/{d.id}/?__a=1', proxies=proxies).json()["graphql"][
             "location"]
 
-        location = d["name"]
+        location = d.name
         lat = pics["lat"]
         lng = pics["lng"]
 
-        loc = Location()
 
-
-
-        photo_meta = PhotoMeta(location, lat, lng)
-        photo_list = []
+        loc = Location(id=d.id)
+        loc.lat = lat
+        loc.lng = lng
+        loc.save()
 
         for r in pics['edge_location_to_media']['edges']:
             pic = r["node"]
@@ -69,7 +68,7 @@ def scrape_photos():
             if st > 2:
                 break
 
-        print(f'Added {len(photo_list)} photos for {location}')
+        print(f'Added photos for {location}')
 
         # How many locations to read?
         st2 = st2 + 1

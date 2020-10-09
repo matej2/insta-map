@@ -30,10 +30,11 @@ def scrape_locations():
 
             for r in loc["location_list"]:
 
-                if len(Location.objects.get(id=r["id"])) > 0:
+                try:
                     l = Location.objects.get(id=r["id"])
-                else:
+                except Location.DoesNotExist:
                     l = Location.objects.create(id=r["id"], city_id=d.id)
+
                 l.name=r["name"]
                 l.save()
 
