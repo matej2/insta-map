@@ -34,6 +34,7 @@ def scrape_photos():
             loc = Location.objects.get(id=d.id)
             loc.lat = lat
             loc.lng = lng
+            loc.website = pics_json["website"]
             loc.save()
 
             for r in pics_json['edge_location_to_media']['edges']:

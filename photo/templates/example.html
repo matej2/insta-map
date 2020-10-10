@@ -68,6 +68,7 @@ httpGetAsync("photos", function(d) {
     name = loc["name"]
     lat = loc["lat"];
     lng = loc["lng"];
+    website = loc["website"]
 
     let myIcon = L.icon({
       iconUrl: c["thumbnail"],
@@ -79,7 +80,14 @@ httpGetAsync("photos", function(d) {
     let m = L.marker([lat, lng], {
       icon: myIcon
     });
-    m.bindPopup("<img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"><p></p>" + c["caption"] + "<p></p>" + name).openPopup();
+
+    if (website !== "") {
+      loc_link = "<a target='_blank' href='" + website + "'>" + name + "</a>"
+    } else {
+      loc_link = name
+    }
+
+    m.bindPopup("<img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"><p></p>" + c["caption"] + "<p></p>" + loc_link).openPopup();
 
     markers.addLayer(m);
   });

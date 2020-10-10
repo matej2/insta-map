@@ -13,6 +13,8 @@ class Location(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True)
     lat = models.FloatField(null=True)
     lng = models.FloatField(null=True)
+    url = models.CharField(max_length=255, null=True)
+    website = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return str('{}:{} ({})'.format(self.id, self.name, self.city.name))
