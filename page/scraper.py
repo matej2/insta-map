@@ -5,8 +5,7 @@ import time
 
 import requests
 
-from insta_map.common import MyEncoder, get_proxy
-from insta_map.settings import PHOTOS
+from insta_map.proxy import proxy_generator
 
 random.seed()
 
@@ -18,9 +17,7 @@ def scrape_user_photos():
     st2 = 0
 
 
-    proxies = {
-        'http': get_proxy()
-    }
+    proxies = proxy_generator()
 
 
     # Caption remove

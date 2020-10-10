@@ -1,8 +1,7 @@
 import random
 import re
 
-from insta_map.common import get_proxy
-from insta_map.proxy import get_using_proxy
+from insta_map.proxy import get_using_proxy, proxy_generator
 from location.models import Location
 from photo.models import Photo
 
@@ -10,13 +9,10 @@ random.seed()
 
 
 def scrape_photos():
-    res = []
     st = 0
     st2 = 0
 
-    proxies = {
-        'http': get_proxy()
-    }
+    proxies = proxy_generator()
 
     # Caption remove
     reg = re.compile('\@\w+|\#\w+')

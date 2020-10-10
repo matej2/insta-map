@@ -3,8 +3,7 @@ import time
 from json import JSONDecodeError
 
 from city.models import City
-from insta_map.common import get_proxy
-from insta_map.proxy import get_using_proxy
+from insta_map.proxy import get_using_proxy, proxy_generator
 from location.models import Location
 
 random.seed()
@@ -14,9 +13,7 @@ def scrape_locations():
     st = 0
     st2 = 0
 
-    proxies = {
-        'http': get_proxy()
-    }
+    proxies = proxy_generator()
 
     data = City.objects.all()
     for d in data:

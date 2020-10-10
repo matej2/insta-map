@@ -3,8 +3,6 @@ import asyncio
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 
-from insta_map.common import save_proxies
-
 if __name__ == '__main__':
     scheduler = AsyncIOScheduler()
 
