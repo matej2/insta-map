@@ -44,19 +44,20 @@ def scrape_photos():
 
                 # Scrape picture details
                 accessibility_caption = ""
+                pic_url = f'https://www.instagram.com/p/{pic["shortcode"]}'
 
-                pic_details = get_using_proxy(f'https://www.instagram.com/p/{pic["shortcode"]}/?__a=1', proxy=proxies)
+                pic_details = get_using_proxy(pic_url + '/?__a=1', proxy=proxies)
                 if pic_details is not False:
                     details_json = pic_details.json()["graphql"]["shortcode_media"]
-                    accessibility_caption = details_json.get("accessibility_caption")
+                    accessibility_caption = details_json.get("accessibility_caption", "")
 
                 # Check Picture for blacklist
-                if nature.match(accessibility_caption) is None:
+                if accessibility_caption is not "" or nature.match(accessibility_caption) is None:
                     continue
 
                 # Remove words from caption
                 if len(pic['edge_media_to_caption']['edges']) > 0:
-                    caption = pic['edge_media_to_caption']['edges'][0]['node']['text']
+                    caption = pic['edge_media_to_caption']['edges'][0]['node']['text'][:400]
                     caption = reg.sub("", caption)
 
 
@@ -70,6 +71,7 @@ def scrape_photos():
                 p.caption = caption
                 p.location = d
                 p.accessibility_caption = accessibility_caption
+                p.url = pic_url
                 p.save()
 
                 # How many pictures for each location?
