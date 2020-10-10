@@ -10,6 +10,7 @@ class Photo(models.Model):
     thumbnail = models.CharField(max_length=255, null=True)
     caption = models.TextField(max_length=255, null=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    accessibility_caption = models.CharField(max_length=255, null=True)
 
     def to_dict(instance):
         opts = instance._meta

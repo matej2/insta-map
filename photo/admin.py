@@ -5,6 +5,6 @@ from photo.models import Photo
 
 
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ("id", "thumbnail", "caption", "location")
+    list_display = ("id", "thumbnail", "caption", "location", "accessibility_caption")
 
 admin.site.register(Photo, PhotoAdmin)

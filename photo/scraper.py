@@ -17,7 +17,7 @@ def scrape_photos():
     # Caption remove
     reg = re.compile('\@\w+|\#\w+')
     # Caption block
-    # TODO
+    nature = re.compile('outdoor|nature|water|tree|sky|plant|cloud|grass')
 
     data = Location.objects.all()
 
@@ -31,6 +31,7 @@ def scrape_photos():
             lat = pics_json["lat"]
             lng = pics_json["lng"]
 
+            # Update location parameters
             loc = Location.objects.get(id=d.id)
             loc.lat = lat
             loc.lng = lng
@@ -41,10 +42,25 @@ def scrape_photos():
                 pic = r["node"]
                 caption = ""
 
+                # Scrape picture details
+                accessibility_caption = ""
+
+                pic_details = get_using_proxy(f'https://www.instagram.com/p/{pic["shortcode"]}/?__a=1', proxy=proxies)
+                if pic_details is not False:
+                    details_json = pic_details.json()["graphql"]["shortcode_media"]
+                    accessibility_caption = details_json.get("accessibility_caption")
+
+                # Check Picture for blacklist
+                if nature.match(accessibility_caption) is None:
+                    continue
+
+                # Remove words from caption
                 if len(pic['edge_media_to_caption']['edges']) > 0:
                     caption = pic['edge_media_to_caption']['edges'][0]['node']['text']
                     caption = reg.sub("", caption)
 
+
+                # Update or create Picture
                 try:
                     p = Photo.objects.get(id=pic["id"])
                 except Photo.DoesNotExist:
@@ -53,6 +69,7 @@ def scrape_photos():
                 p.thumbnail = pic["thumbnail_src"]
                 p.caption = caption
                 p.location = d
+                p.accessibility_caption = accessibility_caption
                 p.save()
 
                 # How many pictures for each location?
