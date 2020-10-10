@@ -1,5 +1,7 @@
 import json
 import os
+import random
+import time
 from random import choice
 
 import requests
@@ -73,7 +75,7 @@ c = 10
 
 
 
-def get_using_proxy(url, proxy=None, c=10):
+def get_using_proxy(url, proxy=None, c=3, disable_proxy=False):
     while c > 0:
         try:
             c = c - 1
@@ -82,10 +84,27 @@ def get_using_proxy(url, proxy=None, c=10):
 
             header = get_random_headers()
             print('Using proxy {}, c={} to reach {}'.format(proxy, c, url))
-            response = requests.get(url, timeout=10, proxies=proxy, headers=header)
+
+            time.sleep((random.random() * 2000 + 1000) / 1000)
+            if disable_proxy is not False:
+                response = requests.get(url, timeout=10, proxies=proxy, headers=header)
+            else:
+                response = requests.get(url, timeout=10)
             if response.status_code == 200:
                 print('Pass in {}-nth try'.format(c))
                 return response
+            else:
+                print('Invalid response: {}'.format(response.status_code))
         except:
             print('Failed, invalidating proxy')
             proxy = None
+
+    try:
+        response = requests.get(url, timeout=10, proxies=proxy, headers=header)
+        if response.status_code == 200:
+            return response
+        else:
+            print('Failed withouth proxy. Returned code is {}'.format(response.status_code))
+    except:
+        print('Failed withouth proxy')
+    return False

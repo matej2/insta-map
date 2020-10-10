@@ -43,7 +43,13 @@ function httpGetAsync(theUrl, callback)
     xmlHttp.send(null);
 }
 
-httpGetAsync("static/photos.json", function(d) {
+var locations;
+
+httpGetAsync("locations", function(d){
+  locations = JSON.parse(d);
+})
+
+httpGetAsync("photos", function(d) {
   res = JSON.parse(d)
 
   let name;
@@ -55,27 +61,27 @@ httpGetAsync("static/photos.json", function(d) {
     let min = 0.005;
     let max = -0.005;
 
+    let loc = locations.filter(function(o){return o.id == c.location_id})[0]
+
     //lat = c["meta"]["lat"]+(Math.random()*(max - min) + min)
     //lng = c["meta"]["lng"]+(Math.random()*(max - min) + min)
-    name = c["meta"]["location"]
-    lat = c["meta"]["lat"];
-    lng = c["meta"]["lng"];
+    name = loc["name"]
+    lat = loc["lat"];
+    lng = loc["lng"];
 
-    c["list"].forEach(function(a) {
-      let myIcon = L.icon({
-        iconUrl: a["thumbnail"],
-        iconSize: [70, 70],
-        iconAnchor: [10, 40],
-        popupAnchor: [-3, -76],
-      });
+    let myIcon = L.icon({
+      iconUrl: c["thumbnail"],
+      iconSize: [70, 70],
+      iconAnchor: [10, 40],
+      popupAnchor: [-3, -76],
+    });
 
-      let m = L.marker([lat, lng], {
-        icon: myIcon
-      });
-      m.bindPopup("<img style=\"height:200px;\" src=\"" + a['thumbnail'] + "\"><p></p>" + a["caption"] + "<p></p>" + name).openPopup();
+    let m = L.marker([lat, lng], {
+      icon: myIcon
+    });
+    m.bindPopup("<img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"><p></p>" + c["caption"] + "<p></p>" + name).openPopup();
 
-      markers.addLayer(m);
-    })
+    markers.addLayer(m);
   });
 
 

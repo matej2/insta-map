@@ -11,10 +11,6 @@ from fake_useragent import UserAgent
 dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "proxies.json")
 ua = UserAgent()
 
-class MyEncoder(JSONEncoder):
-    def default(self, o):
-        return o.__dict__
-
 
 def get_proxies():
     proxies_req = Request('https://www.sslproxies.org/')

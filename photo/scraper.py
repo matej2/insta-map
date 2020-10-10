@@ -1,12 +1,8 @@
-import json
 import random
 import re
-import time
 
-import requests
-
-from insta_map.common import MyEncoder, get_proxy
-from insta_map.settings import PHOTOS, LOCATIONS, CITIES
+from insta_map.common import get_proxy
+from insta_map.proxy import get_using_proxy
 from location.models import Location
 from photo.models import Photo
 
@@ -18,62 +14,58 @@ def scrape_photos():
     st = 0
     st2 = 0
 
-
     proxies = {
         'http': get_proxy()
     }
 
-
     # Caption remove
-    p = re.compile('\@\w+|\#\w+')
+    reg = re.compile('\@\w+|\#\w+')
     # Caption block
     # TODO
 
     data = Location.objects.all()
 
     for d in data:
-        pics = requests.get(f'https://www.instagram.com/explore/locations/{d.id}/?__a=1', proxies=proxies).json()["graphql"][
-            "location"]
+        pics = get_using_proxy(f'https://www.instagram.com/explore/locations/{d.id}/?__a=1', proxy=proxies)
 
-        location = d.name
-        lat = pics["lat"]
-        lng = pics["lng"]
+        if pics is not False:
+            pics_json = pics.json()["graphql"]["location"]
 
+            location = d.name
+            lat = pics_json["lat"]
+            lng = pics_json["lng"]
 
-        loc = Location(id=d.id)
-        loc.lat = lat
-        loc.lng = lng
-        loc.save()
+            loc = Location.objects.get(id=d.id)
+            loc.lat = lat
+            loc.lng = lng
+            loc.save()
 
-        for r in pics['edge_location_to_media']['edges']:
-            pic = r["node"]
-            caption = ""
+            for r in pics_json['edge_location_to_media']['edges']:
+                pic = r["node"]
+                caption = ""
 
-            if len(pic['edge_media_to_caption']['edges']) > 0:
-                caption = pic['edge_media_to_caption']['edges'][0]['node']['text']
-                caption = p.sub("", caption)
+                if len(pic['edge_media_to_caption']['edges']) > 0:
+                    caption = pic['edge_media_to_caption']['edges'][0]['node']['text']
+                    caption = reg.sub("", caption)
 
-            p = Photo()
-            p.thumbnail = pic["thumbnail_src"]
-            p.caption = caption
-            p.location = d
-            p.save()
+                try:
+                    p = Photo.objects.get(id=pic["id"])
+                except Photo.DoesNotExist:
+                    p = Photo()
+                    p.id = pic["id"]
+                p.thumbnail = pic["thumbnail_src"]
+                p.caption = caption
+                p.location = d
+                p.save()
 
+                # How many pictures for each location?
+                st = st + 1
+                if st > 2:
+                    break
 
-            # Sleep for x milliseconds
-            time.sleep((random.random() * 500) / 1000)
+            print(f'Added photos for {location}')
 
-            # How many pictures for each location?
-            st = st + 1
-            if st > 2:
+            # How many locations to read?
+            st2 = st2 + 1
+            if st2 > 70:
                 break
-
-        print(f'Added photos for {location}')
-
-        # How many locations to read?
-        st2 = st2 + 1
-        if st2 > 70:
-            break
-
-    with open(PHOTOS, "w") as file:
-        file.write(json.dumps(res, cls=MyEncoder))
