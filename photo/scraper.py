@@ -45,8 +45,10 @@ def scrape_photos():
                 caption = ""
 
                 # Scrape picture details
-                accessibility_caption = ""
+                # TODO fix production bug: get request returns login page and not json
                 pic_url = f'https://www.instagram.com/p/{pic["shortcode"]}'
+                """
+                accessibility_caption = ""
 
                 pic_details = get_json(pic_url + '/?__a=1', proxy=proxies)
                 if pic_details is not False and pic_details["graphql"]["shortcode_media"].get("accessibility_caption", None) is not None:
@@ -56,7 +58,7 @@ def scrape_photos():
                 # Check Picture for blacklist
                 if accessibility_caption != "" and nature.match(accessibility_caption) is None:
                     continue
-
+                """
                 # Remove words from caption
                 if len(pic['edge_media_to_caption']['edges']) > 0:
                     caption = pic['edge_media_to_caption']['edges'][0]['node']['text'][:254]
@@ -72,7 +74,7 @@ def scrape_photos():
                 p.thumbnail = pic["thumbnail_src"][:254]
                 p.caption = caption
                 p.location_id = d.id
-                p.accessibility_caption = accessibility_caption
+                #p.accessibility_caption = accessibility_caption
                 p.url = pic_url[:254]
                 p.save()
                 print('Updating picture {}'.format(pic["shortcode"]))
