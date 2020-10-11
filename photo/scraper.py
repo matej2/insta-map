@@ -52,7 +52,7 @@ def scrape_photos():
                     accessibility_caption = details_json.get("accessibility_caption", "")
 
                 # Check Picture for blacklist
-                if accessibility_caption != "" or nature.match(accessibility_caption) is None:
+                if accessibility_caption != "" and nature.match(accessibility_caption) is None:
                     continue
 
                 # Remove words from caption
@@ -73,13 +73,12 @@ def scrape_photos():
                 p.accessibility_caption = accessibility_caption
                 p.url = pic_url
                 p.save()
+                print('Updating picture {}'.format(pic["id"]))
 
                 # How many pictures for each location?
                 st = st + 1
                 if st > 2:
                     break
-
-            print(f'Added photos for {location}')
 
             # How many locations to read?
             st2 = st2 + 1
