@@ -6,6 +6,7 @@ from random import choice
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
+from requests import Response
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
@@ -73,8 +74,9 @@ proxy = proxy_generator()
 c = 10
 
 
+def get_json(url, proxy=None, c=3, disable_proxy=False):
+    response = Response()
 
-def get_using_proxy(url, proxy=None, c=3, disable_proxy=False):
     while c > 0:
         try:
             c = c - 1
@@ -89,21 +91,27 @@ def get_using_proxy(url, proxy=None, c=3, disable_proxy=False):
                 response = requests.get(url, timeout=10, proxies=proxy, headers=header)
             else:
                 response = requests.get(url, timeout=10)
+
             if response.status_code == 200:
                 print('Pass in {}-nth try'.format(c))
-                return response
+                break
             else:
-                print('Invalid response: {}'.format(response.status_code))
+                print('Invalid response code: {}'.format(response.status_code))
         except:
             print('Failed, invalidating proxy')
             proxy = None
 
+    if response.status_code is not None and response.status_code != 200:
+        try:
+            response = requests.get(url, timeout=10, proxies=proxy, headers=header)
+            if response.status_code == 200:
+                return response
+        except:
+            print('Failed withouth proxy')
+
     try:
-        response = requests.get(url, timeout=10, proxies=proxy, headers=header)
-        if response.status_code == 200:
-            return response
-        else:
-            print('Failed withouth proxy. Returned code is {}'.format(response.status_code))
+        response_json = response.json()
+        return response_json
     except:
-        print('Failed withouth proxy')
-    return False
+        print('Failed to decode json')
+        return False

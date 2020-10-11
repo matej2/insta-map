@@ -1,7 +1,7 @@
 import random
 import re
 
-from insta_map.proxy import get_using_proxy, proxy_generator
+from insta_map.proxy import get_json, proxy_generator
 from location.models import Location
 from photo.models import Photo
 
@@ -22,10 +22,10 @@ def scrape_photos():
     data = Location.objects.all()
 
     for d in data:
-        pics = get_using_proxy(f'https://www.instagram.com/explore/locations/{d.id}/?__a=1', proxy=proxies)
+        pics = get_json(f'https://www.instagram.com/explore/locations/{d.id}/?__a=1', proxy=proxies)
 
         if pics is not False:
-            pics_json = pics.json()["graphql"]["location"]
+            pics_json = pics["graphql"]["location"]
 
             location = d.name
             lat = pics_json["lat"]
@@ -46,13 +46,13 @@ def scrape_photos():
                 accessibility_caption = ""
                 pic_url = f'https://www.instagram.com/p/{pic["shortcode"]}'
 
-                pic_details = get_using_proxy(pic_url + '/?__a=1', proxy=proxies)
+                pic_details = get_json(pic_url + '/?__a=1', proxy=proxies)
                 if pic_details is not False:
-                    details_json = pic_details.json()["graphql"]["shortcode_media"]
+                    details_json = pic_details["graphql"]["shortcode_media"]
                     accessibility_caption = details_json.get("accessibility_caption", "")
 
                 # Check Picture for blacklist
-                if accessibility_caption is not "" or nature.match(accessibility_caption) is None:
+                if accessibility_caption != "" or nature.match(accessibility_caption) is None:
                     continue
 
                 # Remove words from caption
