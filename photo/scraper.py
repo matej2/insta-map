@@ -71,7 +71,7 @@ def scrape_photos():
                 except Photo.DoesNotExist:
                     p = Photo()
                     p.id = pic["shortcode"]
-                p.thumbnail = pic["thumbnail_src"][:254]
+                p.thumbnail = pic["thumbnail_src"][:499]
                 p.caption = caption
                 p.location_id = d.id
                 #p.accessibility_caption = accessibility_caption
