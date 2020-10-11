@@ -67,11 +67,11 @@ def scrape_photos():
                 except Photo.DoesNotExist:
                     p = Photo()
                     p.id = pic["id"]
-                p.thumbnail = pic["thumbnail_src"]
+                p.thumbnail = pic["thumbnail_src"][:254]
                 p.caption = caption
                 p.location = d
                 p.accessibility_caption = accessibility_caption
-                p.url = pic_url
+                p.url = pic_url[:254]
                 p.save()
                 print('Updating picture {}'.format(pic["id"]))
 
