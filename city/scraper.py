@@ -10,5 +10,5 @@ def scrape_cities():
             try:
                 c = City.objects.get(id=city["id"])
             except City.DoesNotExist:
-                c = City.objects.create(id=city["id"], name=city["name"])
+                c = City.objects.create(id=city["id"], name=city["name"][:254])
             c.save()

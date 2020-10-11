@@ -30,7 +30,7 @@ def scrape_locations():
                         l = Location()
                         l.id = r["id"]
                     l.city = d
-                    l.name = r["name"]
+                    l.name = r["name"][:254]
                     l.url = 'https://www.instagram.com/explore/locations/' + d.id
                     l.save()
 

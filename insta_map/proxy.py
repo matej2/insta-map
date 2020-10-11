@@ -113,5 +113,5 @@ def get_json(url, proxy=None, c=3, disable_proxy=False):
         response_json = response.json()
         return response_json
     except:
-        print('Failed to decode json. Response is: {}'.format(response.content))
+        print('Failed to decode json')
         return False

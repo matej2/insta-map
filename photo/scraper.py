@@ -49,7 +49,7 @@ def scrape_photos():
                 pic_details = get_json(pic_url + '/?__a=1', proxy=proxies)
                 if pic_details is not False:
                     details_json = pic_details["graphql"]["shortcode_media"]
-                    accessibility_caption = details_json.get("accessibility_caption", "")
+                    accessibility_caption = details_json.get("accessibility_caption", "")[:254]
 
                 # Check Picture for blacklist
                 if accessibility_caption != "" and nature.match(accessibility_caption) is None:
@@ -57,7 +57,7 @@ def scrape_photos():
 
                 # Remove words from caption
                 if len(pic['edge_media_to_caption']['edges']) > 0:
-                    caption = pic['edge_media_to_caption']['edges'][0]['node']['text'][:400]
+                    caption = pic['edge_media_to_caption']['edges'][0]['node']['text'][:254]
                     caption = reg.sub("", caption)
 
 
