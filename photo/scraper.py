@@ -47,7 +47,7 @@ def scrape_photos():
                 pic_url = f'https://www.instagram.com/p/{pic["shortcode"]}'
 
                 pic_details = get_json(pic_url + '/?__a=1', proxy=proxies)
-                if pic_details is not False:
+                if pic_details is not False and pic_details["graphql"]["shortcode_media"].get("accessibility_caption", None) is not None:
                     details_json = pic_details["graphql"]["shortcode_media"]
                     accessibility_caption = details_json.get("accessibility_caption", "")[:254]
 
@@ -63,13 +63,13 @@ def scrape_photos():
 
                 # Update or create Picture
                 try:
-                    p = Photo.objects.get(id=pic["id"])
+                    p = Photo.objects.get(id=pic["shortcode"])
                 except Photo.DoesNotExist:
                     p = Photo()
-                    p.id = pic["id"]
+                    p.id = pic["shortcode"]
                 p.thumbnail = pic["thumbnail_src"][:254]
                 p.caption = caption
-                p.location = d
+                p.location_id = d.id
                 p.accessibility_caption = accessibility_caption
                 p.url = pic_url[:254]
                 p.save()
