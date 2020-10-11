@@ -73,7 +73,7 @@ def scrape_photos():
                 p.accessibility_caption = accessibility_caption
                 p.url = pic_url[:254]
                 p.save()
-                print('Updating picture {}'.format(pic["id"]))
+                print('Updating picture {}'.format(pic["shortcode"]))
 
                 # How many pictures for each location?
                 st = st + 1
