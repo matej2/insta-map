@@ -7,8 +7,8 @@ from location.models import Location
 from photo.models import Photo
 
 random.seed()
-LOCATION_LIMIT = os.environ.get('LOCATION_LIMIT') if os.environ.get('LOCATION_LIMIT') else 10
-PHOTO_LIMIT = os.environ.get('PHOTO_LIMIT') if os.environ.get('PHOTO_LIMIT') else 2
+LOCATION_LIMIT = int(os.environ.get('LOCATION_LIMIT')) if os.environ.get('LOCATION_LIMIT') else 10
+PHOTO_LIMIT = int(os.environ.get('PHOTO_LIMIT')) if os.environ.get('PHOTO_LIMIT') else 2
 
 def scrape_photos():
     st = 0

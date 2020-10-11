@@ -8,8 +8,8 @@ from insta_map.proxy import get_json, proxy_generator
 from location.models import Location
 
 random.seed()
-CITY_LIMIT = os.environ.get('CITY_LIMIT') if os.environ.get('CITY_LIMIT') else 30
-LOCATION_LIMIT = os.environ.get('LOCATION_LIMIT') if os.environ.get('LOCATION_LIMIT') else 10
+CITY_LIMIT = int(os.environ.get('CITY_LIMIT')) if os.environ.get('CITY_LIMIT') else 30
+LOCATION_LIMIT = int(os.environ.get('LOCATION_LIMIT')) if os.environ.get('LOCATION_LIMIT') else 10
 
 def scrape_locations():
     st = 0
