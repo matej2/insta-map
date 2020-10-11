@@ -1,3 +1,4 @@
+import os
 import random
 import time
 from json import JSONDecodeError
@@ -7,7 +8,8 @@ from insta_map.proxy import get_json, proxy_generator
 from location.models import Location
 
 random.seed()
-
+CITY_LIMIT = os.environ.get('CITY_LIMIT') if os.environ.get('CITY_LIMIT') else 30
+LOCATION_LIMIT = os.environ.get('LOCATION_LIMIT') if os.environ.get('LOCATION_LIMIT') else 10
 
 def scrape_locations():
     st = 0
@@ -39,12 +41,12 @@ def scrape_locations():
                     print("Added location: {}".format(r["name"]))
 
                     # How many locations for each city?
-                    if st > 2:
+                    if st > LOCATION_LIMIT:
                         break
 
                 # How many cities to read?
                 st2 = st2 + 1
-                if st2 > 50:
+                if st2 > CITY_LIMIT:
                     break
         except KeyError:
             print("KeyError")

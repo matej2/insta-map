@@ -1,3 +1,4 @@
+import os
 import random
 import re
 
@@ -6,7 +7,8 @@ from location.models import Location
 from photo.models import Photo
 
 random.seed()
-
+LOCATION_LIMIT = os.environ.get('LOCATION_LIMIT') if os.environ.get('LOCATION_LIMIT') else 10
+PHOTO_LIMIT = os.environ.get('PHOTO_LIMIT') if os.environ.get('PHOTO_LIMIT') else 2
 
 def scrape_photos():
     st = 0
@@ -77,10 +79,10 @@ def scrape_photos():
 
                 # How many pictures for each location?
                 st = st + 1
-                if st > 2:
+                if st > PHOTO_LIMIT:
                     break
 
             # How many locations to read?
             st2 = st2 + 1
-            if st2 > 70:
+            if st2 > LOCATION_LIMIT:
                 break
