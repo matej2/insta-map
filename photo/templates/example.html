@@ -46,64 +46,66 @@ function httpGetAsync(theUrl, callback)
     xmlHttp.send(null);
 }
 
-var locations;
 
 httpGetAsync("locations", function(d){
+  var locations;
   locations = JSON.parse(d);
-})
 
-httpGetAsync("photos", function(d) {
-  res = JSON.parse(d)
+  httpGetAsync("photos", function(d) {
+    res = JSON.parse(d)
 
-  let name;
-  let lat;
-  let lng;
+    let name;
+    let lat;
+    let lng;
 
-  res.forEach(function(c) {
+    res.forEach(function(c) {
 
-    let min = 0.005;
-    let max = -0.005;
+      let min = 0.005;
+      let max = -0.005;
 
-    let loc = locations.filter(function(o){return o.id == c.location_id})[0]
-    name = loc["name"]
-    lat = loc["lat"];
-    lng = loc["lng"];
-    let website = loc["website"]
-    let url = loc["url"]
+      let loc = locations.filter(function(o){return o.id == c.location_id})[0]
+      name = loc["name"]
+      lat = loc["lat"];
+      lng = loc["lng"];
+      let website = loc["website"]
+      let url = loc["url"]
 
-    let myIcon = L.icon({
-      iconUrl: c["thumbnail"],
-      iconSize: [70, 70],
-      iconAnchor: [10, 40],
-      popupAnchor: [-3, -76],
+      let myIcon = L.icon({
+        iconUrl: c["thumbnail"],
+        iconSize: [70, 70],
+        iconAnchor: [10, 40],
+        popupAnchor: [-3, -76],
+      });
+
+      let m = L.marker([lat, lng], {
+        icon: myIcon
+      });
+
+      // Links, tags
+      let loc_web = ""
+      let loc_link = ""
+
+      if (website !== "" && website !== null) {
+        loc_web = " (<a target='_blank' href='" + website + "'>Website</a>) "
+      } else {
+        loc_web = ""
+      }
+      if (url !== "" && url !== null) {
+        loc_link = "<a target='_blank' href='" + url + "'>" + name + "</a>"
+      } else {
+        loc_link = name
+      }
+
+      m.bindPopup("<img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
+
+      markers.addLayer(m);
     });
 
-    let m = L.marker([lat, lng], {
-      icon: myIcon
-    });
 
-    // Links, tags
-    let loc_web = ""
-    let loc_link = ""
-
-    if (website !== "" && website !== null) {
-      loc_web = " (<a target='_blank' href='" + website + "'>Website</a>) "
-    } else {
-      loc_web = ""
-    }
-    if (url !== "" && url !== null) {
-      loc_link = "<a target='_blank' href='" + url + "'>" + name + "</a>"
-    } else {
-      loc_link = name
-    }
-
-    m.bindPopup("<img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
-
-    markers.addLayer(m);
-  });
-
-
+  })
 })
+
+
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
     minZoom: 4,
