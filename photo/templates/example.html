@@ -14,6 +14,24 @@
   crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    img:before {
+      content: ' ';
+      display: block;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      opacity: 0.3;
+      background-position: center;
+      background-repeat:no-repeat;
+      background-image: url(https://image.flaticon.com/icons/png/128/1485/1485279.png);
+    }
+
+    .leaflet-popup-content img:before {
+          background-position: left top;
+    }
+  </style>
 </head>
 
 <body>
