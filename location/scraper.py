@@ -41,12 +41,12 @@ def scrape_locations():
                     print("Added location: {}".format(r["name"]))
 
                     # How many locations for each city?
-                    if st > LOCATION_LIMIT:
+                    if st >= LOCATION_LIMIT:
                         break
 
                 # How many cities to read?
                 st2 = st2 + 1
-                if st2 > CITY_LIMIT:
+                if st2 >= CITY_LIMIT:
                     break
         except KeyError:
             print("KeyError")

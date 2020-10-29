@@ -82,12 +82,12 @@ def scrape_photos():
 
                 # How many pictures for each location?
                 st = st + 1
-                if st > PHOTO_LIMIT:
+                if st >= PHOTO_LIMIT:
                     break
 
             # How many locations to read?
             st2 = st2 + 1
-            if st2 > LOCATION_LIMIT:
+            if st2 >= LOCATION_LIMIT:
                 break
 
 def invalidate_photos():
