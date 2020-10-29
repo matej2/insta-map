@@ -11,7 +11,7 @@ from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
 dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "proxies.json")
-
+PROXY_ENABLED = os.environ.get('PROXY_ENABLED') if os.environ.get('PROXY_ENABLED') else True
 
 def get_random_headers():
     ua = UserAgent()
@@ -76,6 +76,14 @@ c = 10
 
 def get_json(url, proxy=None, c=3, disable_proxy=False):
     response = Response()
+
+    if PROXY_ENABLED == "False":
+        try:
+            json = requests.get(url, timeout=10).json()
+        except:
+            print("Timeout for url: {}".format(url))
+            json = False
+        return json
 
     while c > 0:
         try:
