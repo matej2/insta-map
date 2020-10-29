@@ -1,6 +1,7 @@
 import os
 import random
 import re
+import requests
 
 from insta_map.proxy import get_json, proxy_generator
 from location.models import Location
@@ -88,3 +89,15 @@ def scrape_photos():
             st2 = st2 + 1
             if st2 > LOCATION_LIMIT:
                 break
+
+def invalidate_photos():
+    data = Photo.objects.all()
+
+    for p in data:
+        if p.url is not None:
+            code = requests.get(p.url).status_code
+        else:
+            code = 200
+        if code != 200 or p.url is None:
+            print("Removing {}".format(p.id))
+            p.delete()
