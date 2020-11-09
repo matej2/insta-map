@@ -39,7 +39,7 @@
   <p>This is my hobby project that shows where Instagram pictures were taken. Currently, only pictures from locations in Slovenia are being displayed. You can click on thumbnail to display larger picture and view caption, location and to see links to the location/post. Hastags and some other data is removed from caption. This project is still work in progress.</p>
   <p>Data is being refreshed in about one day. Come back another day to see more content. </p>
   <h3>DISCLAIMER</h3>
-  <p>This is an unofficial application. It is not, in any way, endorsed by Instagram / Facebook. All media is owned by Instagram / Facebook and/or by the authors. Links to photos can be viewed in image caption. If it not visible, it is due to bug, and will be visible as soon as the bug is fixed.</p>
+  <p>This is an unofficial application. It is not, in any way, endorsed by Instagram / Facebook. All media is owned by Instagram / Facebook and/or by the authors. Original Instagram post can be viewed by clicking on the image. If link is not accessible, it is due to bug that prevents data from being read correctly. Data will be updated.</p>
 
 
 
@@ -114,7 +114,7 @@ httpGetAsync("locations", function(d){
         loc_link = name
       }
 
-      m.bindPopup("<a href=\"" + c['url'] + "\"><img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"></a></br><small>Click on the image to view post</small><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
+      m.bindPopup("<a href=\"" + c['url'] + "\" target=\"_blank\"><img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"></a></br><small>Click on the image to view post</small><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
 
       markers.addLayer(m);
     });
@@ -132,7 +132,9 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     id: 'mapbox/streets-v11',
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
 			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    tileSize: 512,
+    zoomOffset: -1,
 }).addTo(mymap);
 
 var popup = L.popup();
