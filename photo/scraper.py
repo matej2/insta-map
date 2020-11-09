@@ -95,7 +95,7 @@ def invalidate_photos():
 
     for p in data:
         if p.url is not None:
-            code = requests.get(p.url).status_code
+            code = requests.get(p.thumbnail).status_code
         else:
             code = 200
         if code != 200 or p.url is None:
