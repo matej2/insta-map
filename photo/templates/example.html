@@ -114,7 +114,7 @@ httpGetAsync("locations", function(d){
         loc_link = name
       }
 
-      m.bindPopup("<img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
+      m.bindPopup("<a href=\"" + c['url'] + "\"><img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"></a></br><small>Click on the image to view post</small><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
 
       markers.addLayer(m);
     });
