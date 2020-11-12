@@ -16,6 +16,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+
+    body {
+      padding: 0;
+      margin: 0;
+      }
+    html, body, #map {
+        height: 100%;
+        width: 100vw;
+    }
     img:before {
       content: ' ';
       display: block;
@@ -28,8 +37,12 @@
       background-image: url(https://image.flaticon.com/icons/png/128/1485/1485279.png);
     }
 
+    .leaflet-popup-content {
+      max-width: 250px;
+    }
+
     .leaflet-popup-content img:before {
-          background-position: left top;
+      background-position: left top;
     }
   </style>
 </head>

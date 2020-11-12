@@ -18,13 +18,18 @@ def scrape_photos():
     proxies = proxy_generator()
 
     # Caption remove
-    reg = re.compile('\@\w+|\#\w+')
+    reg = re.compile('\@\w+|\#\w+|\r\n|\n|\r')
     # Caption block
     nature = re.compile('outdoor|nature|water|tree|sky|plant|cloud|grass')
 
     data = Location.objects.all()
 
     for d in data:
+        photo_cnt = len(d.photo_set.all())
+        if photo_cnt < PHOTO_LIMIT:
+            loc_pics_limit = PHOTO_LIMIT - photo_cnt
+        else:
+            continue
         pics = get_json(f'https://www.instagram.com/explore/locations/{d.id}/?__a=1', proxy=proxies)
 
         if pics is not False:
@@ -62,8 +67,9 @@ def scrape_photos():
                 """
                 # Remove words from caption
                 if len(pic['edge_media_to_caption']['edges']) > 0:
-                    caption = pic['edge_media_to_caption']['edges'][0]['node']['text'][:254]
+                    caption = pic['edge_media_to_caption']['edges'][0]['node']['text'][:200]
                     caption = reg.sub("", caption)
+                    caption = deEmojify(caption)
 
 
                 # Update or create Picture
@@ -82,13 +88,23 @@ def scrape_photos():
 
                 # How many pictures for each location?
                 st = st + 1
-                if st >= PHOTO_LIMIT:
+                if st >= loc_pics_limit:
                     break
 
             # How many locations to read?
             st2 = st2 + 1
             if st2 >= LOCATION_LIMIT:
                 break
+
+def deEmojify(text):
+    emoji_pattern = re.compile("["
+                               u"\U0001F600-\U0001F64F"  # emoticons
+                               u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                               u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                               u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                               "]+")
+    return emoji_pattern.sub(r'',text)
+
 
 def invalidate_photos():
     data = Photo.objects.all()
