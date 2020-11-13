@@ -14,6 +14,7 @@ apscheduler = "*"
 dj-database-url = "*"
 gunicorn = "*"
 django-heroku = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.6"

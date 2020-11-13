@@ -4,4 +4,4 @@
 static/locations.json
 static/photos.json
 insta_map/proxies.json
-db.sqlite3
+db.sqlite3.env
