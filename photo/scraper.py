@@ -29,6 +29,7 @@ def scrape_photos():
         if photo_cnt < PHOTO_LIMIT:
             loc_pics_limit = PHOTO_LIMIT - photo_cnt
         else:
+            print("Skipping location")
             continue
         pics = get_json(f'https://www.instagram.com/explore/locations/{d.id}/?__a=1', proxy=proxies)
 
@@ -74,6 +75,7 @@ def scrape_photos():
 
                 # Update or create Picture
                 try:
+                    print("Updating existing photo")
                     p = Photo.objects.get(id=pic["shortcode"])
                 except Photo.DoesNotExist:
                     p = Photo()
