@@ -10,7 +10,7 @@ class Photo(models.Model):
     id = models.CharField(max_length=15, primary_key=True)
     thumbnail = models.CharField(max_length=500, null=True)
     caption = models.TextField(max_length=255, null=True)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, blank=True, null=True)
     accessibility_caption = models.CharField(max_length=255, null=True)
     url = models.CharField(max_length=255, null=True)
 

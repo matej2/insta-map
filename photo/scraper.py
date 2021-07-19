@@ -128,21 +128,21 @@ class PhotoScraper():
     def process_photos(self):
         photos = self.get_photos()
 
-        for pic in photos:
+        for pic in photos['body']['items']:
             try:
-                p = Photo.objects.get(id=pic["shortcode"])
+                p = Photo.objects.get(id=pic['code'])
             except Photo.DoesNotExist:
                 p = Photo()
-                p.id = pic['id']
+                p.id = pic['code']
 
-            p.thumbnail = pic['image_versions2'][0][:499]
+            p.thumbnail = pic['image_versions2']['candidates'][0]['url'][:499]
             caption = reg.sub("", pic['caption']['text'])
             caption = self.deEmojify(caption)
             p.caption = caption
             p.location_id = pic['location']['facebook_places_id']
             # p.accessibility_caption = accessibility_caption
             p.save()
-            print('Updating picture {}'.format(pic["shortcode"]))
+            print('Updating picture {}'.format(pic["code"]))
 
 
     def get_photos(self):

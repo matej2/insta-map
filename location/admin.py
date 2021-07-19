@@ -7,6 +7,6 @@ from django.contrib import admin
 from location.models import Location
 
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "city", "url", "website")
+    list_display = ("id", "name", "url", "website")
 
 admin.site.register(Location, LocationAdmin)
