@@ -6,6 +6,7 @@ import requests
 
 from insta_map.proxy import get_json, proxy_generator
 from location.models import Location
+from location.scraper import LocationScraper
 from photo.models import Photo
 
 random.seed()
@@ -126,9 +127,17 @@ class PhotoScraper():
                 p.delete()
 
     def process_photos(self):
+        self.invalidate_photos()
         photos = self.get_photos()
 
         for pic in photos['body']['items']:
+            # Process location
+            if 'location' in pic:
+                LocationScraper.process_location(loc=pic['location'])
+            else:
+                print('No location')
+                continue
+
             try:
                 p = Photo.objects.get(id=pic['code'])
             except Photo.DoesNotExist:
@@ -139,9 +148,14 @@ class PhotoScraper():
             caption = reg.sub("", pic['caption']['text'])
             caption = self.deEmojify(caption)
             p.caption = caption
-            p.location_id = pic['location']['facebook_places_id']
+            if 'location' in pic:
+                p.location_id = pic['location']['pk']
+            p.url = f'https://www.instagram.com/p/{pic["code"]}'
             # p.accessibility_caption = accessibility_caption
-            p.save()
+            try:
+                p.save()
+            except:
+                continue
             print('Updating picture {}'.format(pic["code"]))
 
 

@@ -23,7 +23,7 @@ RESPONSE_LOCATION = json.loads('{ "address": "Ghitorni", "city": "New Delhi", "e
 class LocationScraperTest(unittest.TestCase):
     def test_process_locations(self):
         scraper = LocationScraper()
-        loc_id = scraper.process_locations(RESPONSE_LOCATION)
+        loc_id = scraper.process_location(RESPONSE_LOCATION)
 
         self.assertIsNotNone(loc_id)
 

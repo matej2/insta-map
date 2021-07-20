@@ -61,7 +61,12 @@ class LocationScraper():
 
             time.sleep((random.random() * 500) / 1000)
 
-    def process_locations(self, loc):
+    @staticmethod
+    def process_location(loc):
+
+        if 'lng' not in loc:
+            return False
+
         try:
             l = Location.objects.get(loc['pk'])
         except (Location.DoesNotExist, TypeError):
@@ -69,6 +74,10 @@ class LocationScraper():
             l.id = loc['pk']
         l.name = loc['name'][:254]
         l.url = 'https://www.instagram.com/explore/locations/' + str(loc['pk'])
+        if 'lat' in loc:
+            l.lat = loc['lat']
+        if 'lng' in loc:
+            l.lng = loc['lng']
         l.save()
 
         return loc['pk']
