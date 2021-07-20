@@ -1,10 +1,7 @@
-import json
 import os
 import random
 import time
 from json import JSONDecodeError
-
-import requests
 
 from city.models import City
 from insta_map.proxy import get_json, proxy_generator

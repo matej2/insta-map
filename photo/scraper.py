@@ -2,7 +2,13 @@ import json
 import os
 import random
 import re
+
+import django
 import requests
+
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "insta_map.settings")
+django.setup()
 
 from insta_map.proxy import get_json, proxy_generator
 from location.models import Location
@@ -130,7 +136,7 @@ class PhotoScraper():
         self.invalidate_photos()
         photos = self.get_photos()
 
-        for pic in photos['body']['items']:
+        for pic in photos:
             # Process location
             if 'location' in pic:
                 LocationScraper.process_location(loc=pic['location'])
@@ -160,7 +166,7 @@ class PhotoScraper():
 
 
     def get_photos(self):
-        return True
+        print('Getting data')
         url = "https://instagram47.p.rapidapi.com/user_tagged_posts"
 
         querystring = {"userid": USER_ID}
@@ -173,3 +179,7 @@ class PhotoScraper():
         response = requests.request("GET", url, headers=headers, params=querystring)
 
         return json.loads(response.text)['body']['items']
+
+if __name__ == "__main__":
+    scraper = PhotoScraper()
+    scraper.process_photos()
