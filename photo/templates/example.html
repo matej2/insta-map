@@ -13,6 +13,7 @@
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+  <script async src="//www.instagram.com/embed.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -66,8 +67,7 @@ var markers = L.markerClusterGroup({
   spiderfyDistanceMultiplier: 2.7
 });
 
-function httpGetAsync(theUrl, callback)
-{
+function httpGetAsync(theUrl, callback){
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
@@ -76,6 +76,17 @@ function httpGetAsync(theUrl, callback)
     xmlHttp.open("GET", theUrl, true); // true for asynchronous
     xmlHttp.send(null);
 }
+
+function reloadEmbed() {
+    setTimeout(function() {
+      console.log('test');
+      window.instgrm.Embeds.process();
+    }, 10)
+}
+
+mymap.on('popupopen', function(e) {
+  reloadEmbed();
+});
 
 
 httpGetAsync("locations", function(d){
@@ -95,6 +106,9 @@ httpGetAsync("locations", function(d){
       let max = -0.005;
 
       let loc = locations.filter(function(o){return o.id == c.location_id})[0]
+      if (loc == null) {
+        console.log("Location not foud for photo: "+c.id)
+      }
       name = loc["name"]
       lat = loc["lat"];
       lng = loc["lng"];
@@ -127,7 +141,8 @@ httpGetAsync("locations", function(d){
         loc_link = name
       }
 
-      m.bindPopup("<a href=\"" + c['url'] + "\" target=\"_blank\"><img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"></a></br><small>Click on the image to view post</small><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
+      //m.bindPopup("</br><small>Click on the image to view post</small><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
+      m.bindPopup("<blockquote class='instagram-media' data-instgrm-captioned data-instgrm-permalink='https://www.instagram.com/p/CRhD1n1gGWC/?utm_source=ig_embed&amp;utm_campaign=loading' data-instgrm-version='13' target='_blank'>A post shared by zerowaste spletna trgovina (@tidy_owl)</a></p></div></blockquote> </br><small>Click on the image to view post</small><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
 
       markers.addLayer(m);
     });
