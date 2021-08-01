@@ -12,8 +12,13 @@
     function httpGetAsync(theUrl, callback){
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                callback(xmlHttp.responseText);
+
+
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+              let response = JSON.parse(xmlHttp.responseText);
+              callback(response);
+            }
+
         }
         xmlHttp.open("GET", theUrl, true); // true for asynchronous
         xmlHttp.send(null);
@@ -35,12 +40,10 @@
       reloadEmbed();
     });
 
-    httpGetAsync("locations", function(l){
-        var locations = JSON.parse(l);
+    httpGetAsync("locations", function(locations){
         console.log(locations)
 
-        httpGetAsync("photos", function(p) {
-            var photos = JSON.parse(p)
+        httpGetAsync("photos", function(photos) {
 
              photos.forEach(function(img){
                 let loc = locations.filter(function(l){return l.id == img.location_id})[0]
@@ -54,7 +57,7 @@
                 console.log(loc);
 
                 let myIcon = L.icon({
-                    iconUrl: "https://image.flaticon.com/icons/png/128/55/55999.png",
+                    iconUrl: img["thumbnail"],
                     iconSize: [70, 70],
                     popupAnchor: [-3, -30],
                 });
