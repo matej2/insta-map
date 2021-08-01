@@ -129,6 +129,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-
+STATIC_URL = 'staticfiles'
 
 django_heroku.settings(locals())

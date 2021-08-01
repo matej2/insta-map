@@ -1,0 +1,151 @@
+<html><head>
+
+	<title>Quick Start - Leaflet</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico">
+
+    <!-- JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script async src="//www.instagram.com/embed.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="">
+
+    <style>
+
+    #mapid { height: 660px; }
+
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    html, body, #map {
+      height: 100%;
+      width: 100vw;
+    }
+
+    .leaflet-popup-content {
+      max-width: 250px;
+    }
+
+    .leaflet-popup-content img:before {
+     background-position: left top;
+    }
+
+    .embed-container {
+      position: relative;
+      padding-bottom: 120%;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .embed-container iframe, .embed-container object, .embed-container embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 249px;
+      min-width: 249px !important;
+      height: 100%;
+    }
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div id="mapid"></div>
+    </div>
+  </div>
+</div>
+<script>
+
+    function httpGetAsync(theUrl, callback){
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous
+        xmlHttp.send(null);
+    }
+
+    function reloadEmbed() {
+        setTimeout(function() {
+          window.instgrm.Embeds.process();
+        }, 5)
+    }
+
+
+    var markers = L.markerClusterGroup({
+        spiderfyDistanceMultiplier: 2.7
+    });
+
+	var mymap = L.map('mapid').setView([51.505, -0.09], 2);
+	mymap.on('popupopen', function(e) {
+      reloadEmbed();
+    });
+
+    httpGetAsync("locations", function(l){
+        var locations = JSON.parse(l);
+        console.log(locations)
+
+        httpGetAsync("photos", function(p) {
+            var photos = JSON.parse(p)
+
+             photos.forEach(function(img){
+                let loc = locations.filter(function(l){return l.id == img.location_id})[0]
+
+                name = loc["name"]
+                lat = loc["lat"];
+                lng = loc["lng"];
+                let website = loc["website"]
+                let url = loc["url"]
+
+                console.log(loc);
+
+                let myIcon = L.icon({
+                    iconUrl: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Picture_icon_BLACK.svg",
+                    iconSize: [70, 70],
+                    popupAnchor: [-3, -30],
+                });
+
+                let m = L.marker([lat, lng], {
+                    icon: myIcon
+                });
+                m.bindPopup("<div class='embed-container'><blockquote class='instagram-media' data-instgrm-permalink='https://www.instagram.com/p/"+img["id"]+"/?utm_source=ig_embed&amp;utm_campaign=loading' data-instgrm-version='13' target='_blank'>A post shared by zerowaste spletna trgovina (@tidy_owl)</a></p></div></blockquote></div>").openPopup();
+
+                markers.addLayer(m);
+             })
+        });
+    });
+
+
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1
+	}).addTo(mymap);
+
+	var popup = L.popup();
+	mymap.addLayer(markers);
+
+
+</script>
+
+
+
+
+
+</body></html>

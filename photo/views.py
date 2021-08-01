@@ -12,4 +12,4 @@ def photo_list(request):
 
 
 def index_summary(request):
-    return render(request, 'example.html')
+    return render(request, 'home.html')

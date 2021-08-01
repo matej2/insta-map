@@ -26,17 +26,6 @@
         height: 100%;
         width: 100vw;
     }
-    img:before {
-      content: ' ';
-      display: block;
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      opacity: 0.3;
-      background-position: center;
-      background-repeat:no-repeat;
-      background-image: url(https://image.flaticon.com/icons/png/128/1485/1485279.png);
-    }
 
     .leaflet-popup-content {
       max-width: 250px;
@@ -44,6 +33,22 @@
 
     .leaflet-popup-content img:before {
       background-position: left top;
+    }
+
+  .embed-container {
+    position: relative;
+    padding-bottom: 120%;
+    height: 0;
+    overflow: hidden;
+    }
+
+  .embed-container iframe, .embed-container object, .embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 249px;
+    min-width: 249px !important;
+    height: 100%;
     }
   </style>
 </head>
@@ -54,7 +59,7 @@
   <p>Data is being refreshed in about one day. Come back another day to see more content. </p>
   <h3>DISCLAIMER</h3>
   <p>This is an unofficial application. It is not, in any way, endorsed by Instagram / Facebook. All media is owned by Instagram / Facebook and/or by the authors. Original Instagram post can be viewed by clicking on the image. If link is not accessible, it is due to bug that prevents data from being read correctly. Data will be updated.</p>
-
+  <p>Icons: https://commons.wikimedia.org/wiki/File:Picture_icon_BLACK.svg</p>
 
 
 <script>
@@ -79,9 +84,8 @@ function httpGetAsync(theUrl, callback){
 
 function reloadEmbed() {
     setTimeout(function() {
-      console.log('test');
       window.instgrm.Embeds.process();
-    }, 10)
+    }, 5)
 }
 
 mymap.on('popupopen', function(e) {
@@ -105,6 +109,8 @@ httpGetAsync("locations", function(d){
       let min = 0.005;
       let max = -0.005;
 
+      console.log("Photo");
+
       let loc = locations.filter(function(o){return o.id == c.location_id})[0]
       if (loc == null) {
         console.log("Location not foud for photo: "+c.id)
@@ -115,34 +121,23 @@ httpGetAsync("locations", function(d){
       let website = loc["website"]
       let url = loc["url"]
 
+    /*
       let myIcon = L.icon({
-        iconUrl: c["thumbnail"],
+        iconUrl: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Picture_icon_BLACK.svg",
         iconSize: [70, 70],
-        iconAnchor: [10, 40],
-        popupAnchor: [-3, -76],
+        popupAnchor: [-3, -30],
       });
 
       let m = L.marker([lat, lng], {
         icon: myIcon
       });
+      */
 
-      // Links, tags
-      let loc_web = ""
-      let loc_link = ""
-
-      if (website !== "" && website !== null) {
-        loc_web = " (<a target='_blank' href='" + website + "'>Website</a>) "
-      } else {
-        loc_web = ""
-      }
-      if (url !== "" && url !== null) {
-        loc_link = "<a target='_blank' href='" + url + "'>" + name + "</a>"
-      } else {
-        loc_link = name
-      }
+      let m = L.marker([lat, lng]);
 
       //m.bindPopup("</br><small>Click on the image to view post</small><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
-      m.bindPopup("<blockquote class='instagram-media' data-instgrm-captioned data-instgrm-permalink='https://www.instagram.com/p/CRhD1n1gGWC/?utm_source=ig_embed&amp;utm_campaign=loading' data-instgrm-version='13' target='_blank'>A post shared by zerowaste spletna trgovina (@tidy_owl)</a></p></div></blockquote> </br><small>Click on the image to view post</small><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
+      //m.bindPopup("<div class='embed-container'><blockquote class='instagram-media' data-instgrm-permalink='https://www.instagram.com/p/"+c["id"]+"/?utm_source=ig_embed&amp;utm_campaign=loading' data-instgrm-version='13' target='_blank'>A post shared by zerowaste spletna trgovina (@tidy_owl)</a></p></div></blockquote></div>").openPopup();
+      m.bindPopup("test").openPopup()
 
       markers.addLayer(m);
     });
