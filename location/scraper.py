@@ -12,7 +12,8 @@ CITY_LIMIT = int(os.environ.get('CITY_LIMIT')) if os.environ.get('CITY_LIMIT') e
 LOCATION_LIMIT = int(os.environ.get('LOCATION_LIMIT')) if os.environ.get('LOCATION_LIMIT') else 10
 
 class LocationScraper():
-    def scrape_locations(self):
+    @staticmethod
+    def scrape_locations():
         st = 0
         st2 = 0
 
@@ -22,8 +23,7 @@ class LocationScraper():
         for d in data:
 
             try:
-                loc = get_json(f'https://www.instagram.com/explore/locations/{d.id}/?__a=1', proxy=proxies,
-                               disable_proxy=True)
+                loc = get_json(f'https://www.instagram.com/explore/locations/{d.id}/?__a=1', proxy=proxies)
                 if loc is not False:
                     for r in loc["location_list"]:
 

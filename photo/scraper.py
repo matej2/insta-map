@@ -26,7 +26,8 @@ USER_ID = 9892920103
 reg = re.compile('\@\w+|\#\w+|\r\n|\n|\r')
 
 class PhotoScraper():
-    def scrape_photos(self):
+    @staticmethod
+    def scrape_photos():
         st = 0
         st2 = 0
 
@@ -83,7 +84,7 @@ class PhotoScraper():
                     if len(pic['edge_media_to_caption']['edges']) > 0:
                         caption = pic['edge_media_to_caption']['edges'][0]['node']['text'][:200]
                         caption = reg.sub("", caption)
-                        caption = self.deEmojify(caption)
+                        caption = PhotoScraper.deEmojify(caption)
 
 
                     # Update or create Picture
@@ -110,7 +111,8 @@ class PhotoScraper():
                 if st2 >= LOCATION_LIMIT:
                     break
 
-    def deEmojify(self, text):
+    @staticmethod
+    def deEmojify(text):
         emoji_pattern = re.compile("["
                                    u"\U0001F600-\U0001F64F"  # emoticons
                                    u"\U0001F300-\U0001F5FF"  # symbols & pictographs
@@ -119,8 +121,8 @@ class PhotoScraper():
                                    "]+")
         return emoji_pattern.sub(r'',text)
 
-
-    def invalidate_photos(self):
+    @staticmethod
+    def invalidate_photos():
         data = Photo.objects.all()
 
         for p in data:
@@ -132,9 +134,10 @@ class PhotoScraper():
                 print("Removing {}".format(p.id))
                 p.delete()
 
-    def process_photos(self):
-        self.invalidate_photos()
-        photos = self.get_photos()
+    @staticmethod
+    def process_photos():
+        PhotoScraper.invalidate_photos()
+        photos = PhotoScraper.get_photos()
 
         for pic in photos:
             # Process location
@@ -152,7 +155,7 @@ class PhotoScraper():
 
             p.thumbnail = pic['image_versions2']['candidates'][0]['url'][:499]
             caption = reg.sub("", pic['caption']['text'])
-            caption = self.deEmojify(caption)
+            caption = PhotoScraper.deEmojify(caption)
             p.caption = caption
             if 'location' in pic:
                 p.location_id = pic['location']['pk']
@@ -164,8 +167,8 @@ class PhotoScraper():
                 continue
             print('Updating picture {}'.format(pic["code"]))
 
-
-    def get_photos(self):
+    @staticmethod
+    def get_photos():
         print('Getting data')
         url = "https://instagram47.p.rapidapi.com/user_tagged_posts"
 
