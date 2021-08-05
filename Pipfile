@@ -15,6 +15,7 @@ dj-database-url = "*"
 gunicorn = "*"
 django-heroku = "*"
 python-dotenv = "*"
+djangorestframework = "*"
 
 [requires]
 python_version = "3.6"

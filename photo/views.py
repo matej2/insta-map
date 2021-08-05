@@ -11,5 +11,5 @@ def photo_list(request):
     return HttpResponse(p, content_type="application/json")
 
 
-def index_summary(request):
+def locationPhotoView(request):
     return render(request, 'example.html')
