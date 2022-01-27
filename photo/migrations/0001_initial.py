@@ -8,10 +8,6 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('location', '0002_auto_20201008_2154'),
-    ]
-
     operations = [
         migrations.CreateModel(
             name='Photo',
@@ -19,7 +15,6 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('thumbnail', models.CharField(max_length=255, null=True)),
                 ('caption', models.CharField(max_length=255, null=True)),
-                ('location', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='location.location')),
             ],
         ),
     ]
