@@ -7,4 +7,4 @@ from django.shortcuts import render
 from photo.models import Photo
 
 def infoView(request):
-    return render(request, 'page/info.html')
+    return render(request, 'common/info.html')
