@@ -1,166 +1,90 @@
-<html>
-<head>
-  <title>Openlayers Marker Array Multilayer Example</title>
-  <style>
-    #mapid { height: 660px; }
-  </style>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-  crossorigin=""/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"/>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-  crossorigin=""></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-
-    body {
-      padding: 0;
-      margin: 0;
-      }
-    html, body, #map {
-        height: 100%;
-        width: 100vw;
-    }
-    img:before {
-      content: ' ';
-      display: block;
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      opacity: 0.3;
-      background-position: center;
-      background-repeat:no-repeat;
-      background-image: url(https://image.flaticon.com/icons/png/128/1485/1485279.png);
-    }
-
-    .leaflet-popup-content {
-      max-width: 250px;
-    }
-
-    .leaflet-popup-content img:before {
-      background-position: left top;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="mapid"></div>
-  <p>This is my hobby project that shows where Instagram pictures were taken. Currently, only pictures from locations in Slovenia are being displayed. You can click on thumbnail to display larger picture and view caption, location and to see links to the location/post. Hastags and some other data is removed from caption. This project is still work in progress.</p>
-  <p>Data is being refreshed in about one day. Come back another day to see more content. </p>
-  <h3>DISCLAIMER</h3>
-  <p>This is an unofficial application. It is not, in any way, endorsed by Instagram / Facebook. All media is owned by Instagram / Facebook and/or by the authors. Original Instagram post can be viewed by clicking on the image. If link is not accessible, it is due to bug that prevents data from being read correctly. Data will be updated.</p>
-
-
-
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div id="mapid"></div>
+    </div>
+  </div>
+</div>
 <script>
-var mymap = L.map('mapid', {
-    maxZoom: 20,
-    zoom: 13
-  }).setView([46.03211, 14.60813], 9);
 
-var markers = L.markerClusterGroup({
-  spiderfyDistanceMultiplier: 2.7
-});
+    function httpGetAsync(theUrl, callback){
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
 
-function httpGetAsync(theUrl, callback)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
+
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+              let response = JSON.parse(xmlHttp.responseText);
+              callback(response);
+            }
+
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous
+        xmlHttp.send(null);
     }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous
-    xmlHttp.send(null);
-}
+
+    function reloadEmbed() {
+        setTimeout(function() {
+          window.instgrm.Embeds.process();
+        }, 5)
+    }
 
 
-httpGetAsync("locations", function(d){
-  var locations;
-  locations = JSON.parse(d);
+    var markers = L.markerClusterGroup({
+        spiderfyDistanceMultiplier: 2.7
+    });
 
-  httpGetAsync("photos", function(d) {
-    res = JSON.parse(d)
+	var mymap = L.map('mapid').setView([51.505, -0.09], 4);
+	mymap.on('popupopen', function(e) {
+      reloadEmbed();
+    });
 
-    let name;
-    let lat;
-    let lng;
+    httpGetAsync("locations", function(locations){
+        console.log(locations)
 
-    res.forEach(function(c) {
+        httpGetAsync("photos", function(photos) {
 
-      let min = 0.005;
-      let max = -0.005;
+             photos.forEach(function(img){
+                let loc = locations.filter(function(l){return l.id == img.location_id})[0]
 
-      let loc = locations.filter(function(o){return o.id == c.location_id})[0]
-      name = loc["name"]
-      lat = loc["lat"];
-      lng = loc["lng"];
-      let website = loc["website"]
-      let url = loc["url"]
+                name = loc["name"]
+                lat = loc["lat"];
+                lng = loc["lng"];
+                let website = loc["website"]
+                let url = loc["url"]
 
-      let myIcon = L.icon({
-        iconUrl: c["thumbnail"],
-        iconSize: [70, 70],
-        iconAnchor: [10, 40],
-        popupAnchor: [-3, -76],
-      });
+                console.log(loc);
 
-      let m = L.marker([lat, lng], {
-        icon: myIcon
-      });
+                let myIcon = L.icon({
+                    iconUrl: "https://image.flaticon.com/icons/png/128/55/55999.png",
+                    iconSize: [70, 70],
+                    popupAnchor: [-3, -30],
+                });
 
-      // Links, tags
-      let loc_web = ""
-      let loc_link = ""
+                let m = L.marker([lat, lng], {
+                    icon: myIcon
+                });
+                m.bindPopup("<div class='embed-container'><blockquote class='instagram-media' data-instgrm-permalink='https://www.instagram.com/p/"+img["id"]+"/?utm_source=ig_embed&amp;utm_campaign=loading' data-instgrm-version='13' target='_blank'>A post shared by zerowaste spletna trgovina (@tidy_owl)</a></p></div></blockquote></div>").openPopup();
 
-      if (website !== "" && website !== null) {
-        loc_web = " (<a target='_blank' href='" + website + "'>Website</a>) "
-      } else {
-        loc_web = ""
-      }
-      if (url !== "" && url !== null) {
-        loc_link = "<a target='_blank' href='" + url + "'>" + name + "</a>"
-      } else {
-        loc_link = name
-      }
-
-      m.bindPopup("<a href=\"" + c['url'] + "\" target=\"_blank\"><img style=\"height:200px;\" src=\"" + c['thumbnail'] + "\"></a></br><small>Click on the image to view post</small><p></p>" + c["caption"] + "<p></p>" + loc_link + loc_web).openPopup();
-
-      markers.addLayer(m);
+                markers.addLayer(m);
+             })
+        });
     });
 
 
-  })
-})
-
-
-
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-    minZoom: 4,
-    maxZoom: 25,
-    maxNativeZoom: 25,
-    id: 'mapbox/streets-v11',
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    tileSize: 512,
-    zoomOffset: -1,
-}).addTo(mymap);
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1
+	}).addTo(mymap);
 
-var popup = L.popup();
+	var popup = L.popup();
+	mymap.addLayer(markers);
 
-function onMapClick(e) {
-    popup
-        .setLatLng(e.latlng)
-        .setContent("You clicked the map at " + e.latlng.toString())
-        .openOn(mymap);
-}
-
-mymap.addLayer(markers);
 
 </script>
-</body>
-</html>
+{% endblock content %}

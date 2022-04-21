@@ -11,7 +11,7 @@ from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
 dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "proxies.json")
-PROXY_ENABLED = os.environ.get('PROXY_ENABLED') if os.environ.get('PROXY_ENABLED') else True
+PROXY_ENABLED = os.environ.get('PROXY_ENABLED') if os.environ.get('PROXY_ENABLED') else False
 
 def get_random_headers():
     ua = UserAgent()
@@ -45,8 +45,8 @@ def proxy_generator():
     soup = BeautifulSoup(response.content, features='html.parser')
 
     return {'https': 'http://' + choice(list(map(lambda x: x[0] + ':' + x[1], list(
-        zip(map(lambda x: x.text, soup.select('#proxylisttable td')[::8]),
-            map(lambda x: x.text, soup.select('#proxylisttable td')[1::8]))))))}
+        zip(map(lambda x: x.text, soup.select('#list td')[::8]),
+            map(lambda x: x.text, soup.select('#list td')[1::8]))))))}
 
 
 def requests_retry_session(
@@ -74,16 +74,8 @@ proxy = proxy_generator()
 c = 10
 
 
-def get_json(url, proxy=None, c=3, disable_proxy=False):
+def get_json(url, proxy=None, c=3):
     response = Response()
-
-    if PROXY_ENABLED == "False":
-        try:
-            json = requests.get(url, timeout=10).json()
-        except:
-            print("Timeout for url: {}".format(url))
-            json = False
-        return json
 
     while c > 0:
         try:
@@ -92,13 +84,13 @@ def get_json(url, proxy=None, c=3, disable_proxy=False):
                 proxy = proxy_generator()
 
             header = get_random_headers()
-            print('Using proxy {}, c={} to reach {}'.format(proxy, c, url))
 
             time.sleep((random.random() * 2000 + 1000) / 1000)
-            if disable_proxy is not False:
+            if PROXY_ENABLED is True:
+                print('Using proxy {}, c={} to reach {}'.format(proxy, c, url))
                 response = requests.get(url, timeout=10, proxies=proxy, headers=header)
             else:
-                response = requests.get(url, timeout=10)
+                response = requests.get(url, timeout=10, headers=header)
 
             if response.status_code == 200:
                 print('Pass in {}-nth try'.format(c))

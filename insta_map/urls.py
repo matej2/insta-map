@@ -18,15 +18,17 @@ import os
 from django.conf.urls import url
 from django.contrib import admin
 
+from insta_map.views import infoView
 from location.views import location_list
-from photo.views import index_summary, photo_list
+from photo.views import locationPhotoView, photo_list
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    path('', index_summary, name="home"),
+    path('', locationPhotoView,name="location-photos"),
+    path('info', infoView, name="info"),
     path('photos', photo_list, name="photos"),
     path('locations', location_list, name="photos")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

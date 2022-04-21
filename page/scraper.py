@@ -1,9 +1,15 @@
 import json
+import os
 import random
 import re
 import time
 
+import django
 import requests
+
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "insta_map.settings")
+django.setup()
 
 from insta_map.proxy import proxy_generator
 
