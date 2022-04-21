@@ -45,8 +45,8 @@ def proxy_generator():
     soup = BeautifulSoup(response.content, features='html.parser')
 
     return {'https': 'http://' + choice(list(map(lambda x: x[0] + ':' + x[1], list(
-        zip(map(lambda x: x.text, soup.select('#proxylisttable td')[::8]),
-            map(lambda x: x.text, soup.select('#proxylisttable td')[1::8]))))))}
+        zip(map(lambda x: x.text, soup.select('#list td')[::8]),
+            map(lambda x: x.text, soup.select('#list td')[1::8]))))))}
 
 
 def requests_retry_session(
