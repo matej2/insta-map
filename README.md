@@ -1,10 +1,17 @@
-Interactive map that shows where Instagram photos were taken. Made in Open map and Django.
+# Instagram Photo Map
 
-In first version I use public Instagram GraphQL API. I extract photo urls, description, location name and authors name. I can use this data directly to display them in map popup. I also remove any hashtags and mentions from description.
+An interactive map showcasing the locations where Instagram photos were taken. Built with OpenStreetMap and Django.
 
-Instagram later implemented a time-based token for its images, which meant that image URLs were valid only for about 48 hours. I came to the conclusion that the most simple solution is to use embedded functionality, since I already have post IDs available.
+## Overview
 
-**Project is currentl depreciated due to Instagram setting its API to private**
+Initially, this project utilized the public Instagram GraphQL API to extract photo URLs, descriptions, location names, and authors' names. This data was directly displayed in map pop-ups, with hashtags and mentions removed from descriptions for cleaner display.
+
+However, Instagram later introduced a time-based token for image URLs, rendering them valid for only about 48 hours. To address this, the project switched to using embedded posts, leveraging the available post IDs for a more stable solution.
+
+## Status
+
+**Note:** This project is currently deprecated due to Instagram's transition to a private API.
+
 
 # Instructions
 
